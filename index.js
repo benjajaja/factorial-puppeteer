@@ -1,8 +1,15 @@
 const puppeteer = require('puppeteer');
 
-const START_YEAR = "2021";
-const START_MONTH = "1";
-const COOKIE = "your _factorial_session_v2 cookie value";
+const START_TIME = "1000";
+const END_TIME = "1800";
+
+if (process.argv.length != 5) {
+  console.log("Usage: yarn start START_YEAR START_MONTH COOKIE");
+  process.exit(0);
+}
+
+const [START_YEAR, START_MONTH, COOKIE] = process.argv.slice(2);
+console.log(START_YEAR, START_MONTH, COOKIE);
 
 (async () => {
   const browser = await puppeteer.launch({
@@ -46,12 +53,12 @@ const fillMonth = async (page) => {
     // await input.click();
     await input.evaluate((element) => { element.click(); });
 
-    await input.type("1000");
+    await input.type(START_TIME);
     const input2 = await tr.$("td>div>div>div>div>div>div:last-child>label>div>div>input");
     // await input2.click();
     await input2.evaluate((element) => { element.click(); });
 
-    await input2.type("1800");
+    await input2.type(END_TIME);
 
     await page.waitForTimeout(100);
 
